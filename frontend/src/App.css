@@ -1,0 +1,35 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --color-ink: #1f2937;
+  --color-ink-muted: #6b7280;
+  --color-surface: #ffffff;
+  --color-background: #f4f5f8;
+  --color-border: #e2e8f0;
+  --color-primary: #2f6fde;
+  --radius-card: 10px;
+
+  font-family: Inter, system-ui, sans-serif;
+  color: var(--color-ink);
+  background: var(--color-background);
+  line-height: 1.5;
+}
+
+body {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--color-primary);
+}

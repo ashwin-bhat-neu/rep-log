@@ -1,0 +1,12 @@
+.not-found-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 64px 24px;
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+}
+
+.not-found-page-message {
+  color: var(--color-ink-muted);
+}
