@@ -18,6 +18,10 @@ npm run dev --prefix frontend          # app at http://localhost:5173, forwards 
 
 `GET /api/health` confirms the database connection.
 
-To run the production build locally, run `npm run build --prefix backend` and then `npm start --prefix backend`. Express serves the built app at http://localhost:3000.
+To try the production build, keep the API running and run `npm run build --prefix frontend` and then `npm run preview --prefix frontend`. The app runs at http://localhost:4173.
+
+## Deployment
+
+The app deploys to Vercel as one project with two [services](https://vercel.com/docs/services), configured in `vercel.json`: requests under `/api/` go to the Express backend, and everything else goes to the React frontend. Set `MONGODB_URI` and `SESSION_SECRET` in the Vercel project's environment variables.
 
 Before committing, run `npm run lint` and `npm run format` in both `backend/` and `frontend/`.
