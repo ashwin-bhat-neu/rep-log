@@ -16,6 +16,11 @@ const app = express();
 // Vercel terminates HTTPS at its proxy; trusting X-Forwarded-Proto lets secure cookies be set.
 app.set("trust proxy", true);
 app.use(express.json());
+// API responses depend on who is logged in, so browsers must not reuse them.
+app.use("/api", (request, response, next) => {
+  response.set("Cache-Control", "no-store");
+  next();
+});
 app.use(createSessionMiddleware(process.env.SESSION_SECRET));
 app.use(passport.initialize());
 app.use(passport.session());
