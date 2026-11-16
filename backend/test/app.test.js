@@ -1,6 +1,9 @@
 import assert from "node:assert/strict";
 import { after, before, test } from "node:test";
-import app from "../src/app.js";
+
+// Set before the app loads, since the session middleware requires it at startup.
+process.env.SESSION_SECRET = "test-session-secret";
+const { default: app } = await import("../src/app.js");
 
 let server;
 let baseUrl;
