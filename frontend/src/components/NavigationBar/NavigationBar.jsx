@@ -25,8 +25,14 @@ export default function NavigationBar() {
       </Link>
       {!isCheckingSession && (
         <nav className="navigation-bar-links" aria-label="Main">
+          <NavLink to="/exercises" className={navigationLinkClassName}>
+            Exercises
+          </NavLink>
           {authenticatedUser ? (
             <>
+              <NavLink to="/templates" className={navigationLinkClassName}>
+                Templates
+              </NavLink>
               <span className="navigation-bar-username">
                 {authenticatedUser.username}
               </span>

@@ -1,0 +1,28 @@
+.confirmation-dialog {
+  width: min(520px, calc(100vw - 32px));
+  padding: 32px;
+  border: none;
+  border-radius: 14px;
+  box-shadow: 0 20px 50px rgb(15 23 42 / 25%);
+  color: var(--color-ink);
+}
+
+.confirmation-dialog::backdrop {
+  background: rgb(15 23 42 / 45%);
+}
+
+.confirmation-dialog-title {
+  font-size: 20px;
+}
+
+.confirmation-dialog-message {
+  margin-top: 8px;
+  color: var(--color-ink-muted);
+}
+
+.confirmation-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 28px;
+}

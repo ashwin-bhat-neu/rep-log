@@ -1,0 +1,54 @@
+/* Form fields, the delete button, and tag colors for the exercise library and custom templates pages.
+   Regular buttons use .button and .button-primary from App.css. */
+
+:root {
+  --color-tag-ink: #3730a3;
+  --color-tag-surface: #eef2ff;
+  --color-field-surface: #f8fafc;
+}
+
+/* Links styled as buttons, such as "New template" and "Edit", shouldn't be underlined. */
+a.button {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.button-danger {
+  border-color: var(--color-danger-surface);
+  background: var(--color-danger-surface);
+  color: var(--color-danger);
+}
+
+.field-label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.field-input {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid var(--color-control-border);
+  border-radius: var(--radius-control);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font: inherit;
+}
+
+input.field-input,
+select.field-input {
+  height: 42px;
+}
+
+.field-input:focus-visible {
+  outline: 3px solid rgb(47 111 222 / 35%);
+  outline-offset: 1px;
+}
+
+.error-message {
+  padding: 10px 14px;
+  border-radius: var(--radius-control);
+  background: var(--color-danger-surface);
+  color: #991b1b;
+}

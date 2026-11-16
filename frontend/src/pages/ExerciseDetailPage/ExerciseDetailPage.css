@@ -1,0 +1,97 @@
+.exercise-detail-page {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 32px clamp(16px, 4vw, 50px) 64px;
+}
+
+.exercise-detail-page-back {
+  display: inline-block;
+  margin-bottom: 20px;
+  text-decoration: none;
+}
+
+.exercise-detail-page-back:hover {
+  text-decoration: underline;
+}
+
+.exercise-detail-page-status {
+  display: grid;
+  gap: 8px;
+}
+
+.exercise-detail-page-muted {
+  color: var(--color-ink-muted);
+}
+
+.exercise-detail-page-card {
+  padding: 32px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+}
+
+.exercise-detail-page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.exercise-detail-page-header h1 {
+  font-size: 32px;
+  line-height: 1.2;
+}
+
+.exercise-detail-page-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px 24px;
+  margin: 28px 0 0;
+  padding: 20px 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.exercise-detail-page-facts dt {
+  margin-bottom: 6px;
+  color: var(--color-ink-muted);
+  font-size: 14px;
+}
+
+.exercise-detail-page-facts dd {
+  margin: 0;
+  font-weight: 500;
+}
+
+.exercise-detail-page-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.exercise-detail-page-section {
+  margin-top: 28px;
+}
+
+.exercise-detail-page-section h2 {
+  margin-bottom: 8px;
+  font-size: 20px;
+}
+
+.exercise-detail-page-section p {
+  max-width: 70ch;
+}
+
+.exercise-detail-page-steps {
+  display: grid;
+  gap: 10px;
+  max-width: 70ch;
+  margin: 0;
+  padding-left: 22px;
+}
+
+.exercise-detail-page-steps li::marker {
+  color: var(--color-primary);
+  font-weight: 700;
+}

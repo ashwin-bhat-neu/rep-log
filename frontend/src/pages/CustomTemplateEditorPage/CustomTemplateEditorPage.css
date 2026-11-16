@@ -1,0 +1,15 @@
+.custom-template-editor-page {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px clamp(16px, 4vw, 50px) 64px;
+  display: grid;
+  gap: 24px;
+}
+
+.custom-template-editor-page h1 {
+  font-size: 34px;
+}
+
+.custom-template-editor-page-message {
+  color: var(--color-ink-muted);
+}

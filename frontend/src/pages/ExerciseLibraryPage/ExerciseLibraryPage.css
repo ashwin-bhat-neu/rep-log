@@ -1,0 +1,50 @@
+.exercise-library-page {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px clamp(16px, 4vw, 50px) 64px;
+}
+
+.exercise-library-page-heading {
+  margin-bottom: 24px;
+}
+
+.exercise-library-page-heading h1 {
+  font-size: 34px;
+}
+
+.exercise-library-page-intro {
+  max-width: 62ch;
+  margin-top: 6px;
+  color: var(--color-ink-muted);
+}
+
+.exercise-library-page-status {
+  margin: 24px 0 12px;
+  color: var(--color-ink-muted);
+}
+
+.exercise-library-page-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+}
+
+.exercise-library-page-list-loading {
+  opacity: 0.55;
+}
+
+.exercise-library-page-empty {
+  padding: 40px 24px;
+  text-align: center;
+  background: var(--color-surface);
+  border: 1px dashed #cbd5e1;
+  border-radius: var(--radius-card);
+}
+
+.exercise-library-page-empty p + p {
+  margin-top: 4px;
+  color: var(--color-ink-muted);
+}
