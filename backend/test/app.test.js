@@ -38,3 +38,10 @@ test("malformed JSON bodies return a 400 with the parser's message", async () =>
   assert.equal(response.status, 400);
   assert.ok((await response.json()).error);
 });
+
+test("workout routes require a logged-in user", async () => {
+  const response = await fetch(`${baseUrl}/api/workouts`);
+
+  assert.equal(response.status, 401);
+  assert.deepEqual(await response.json(), { error: "Log in to continue" });
+});

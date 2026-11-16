@@ -8,6 +8,7 @@ import {
   handleUnknownApiRoute,
 } from "./middleware/errorHandlers.js";
 import authenticationRouter from "./routes/authenticationRoutes.js";
+import workoutsRouter from "./routes/workoutsRoutes.js";
 
 configurePassport(passport);
 
@@ -32,6 +33,7 @@ app.get("/api/health", async (request, response) => {
 });
 
 app.use("/api/authentication", authenticationRouter);
+app.use("/api/workouts", workoutsRouter);
 
 app.use("/api", handleUnknownApiRoute);
 app.use(handleUnexpectedError);
