@@ -1,0 +1,50 @@
+.authentication-card-page {
+  display: flex;
+  justify-content: center;
+  padding: 72px 24px;
+}
+
+.authentication-card {
+  width: 100%;
+  max-width: 440px;
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+}
+
+.authentication-card-heading {
+  font-size: 28px;
+}
+
+.authentication-card-introduction {
+  color: var(--color-ink-muted);
+}
+
+.authentication-card-error {
+  padding: 10px 12px;
+  border-radius: var(--radius-control);
+  background: var(--color-danger-surface);
+  color: var(--color-danger);
+  font-size: 14px;
+}
+
+.authentication-card-submit {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+}
+
+.authentication-card-footer {
+  text-align: center;
+  color: var(--color-ink-muted);
+  font-size: 14px;
+}
+
+.authentication-card-footer a {
+  font-weight: 600;
+  text-decoration: none;
+}

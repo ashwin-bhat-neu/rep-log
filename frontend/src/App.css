@@ -10,8 +10,14 @@
   --color-surface: #ffffff;
   --color-background: #f4f5f8;
   --color-border: #e2e8f0;
+  --color-control-border: #d1d5db;
+  --color-navigation: #1e293b;
+  --color-accent: #f59e0b;
   --color-primary: #2f6fde;
+  --color-danger: #dc2626;
+  --color-danger-surface: #fde8e8;
   --radius-card: 10px;
+  --radius-control: 7px;
 
   font-family: Inter, system-ui, sans-serif;
   color: var(--color-ink);
@@ -32,4 +38,27 @@ p {
 
 a {
   color: var(--color-primary);
+}
+
+.button {
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 9px 18px;
+  border-radius: var(--radius-control);
+  border: 1px solid var(--color-control-border);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  cursor: pointer;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.button-primary {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #ffffff;
 }
