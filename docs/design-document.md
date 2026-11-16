@@ -101,13 +101,37 @@ At the end of the month Maya opens **Breakdown** and picks **Month**. The page s
 
 > As Kevin, I want to search and filter the exercise library by name, muscle group, and equipment so that I can find exercises that target a specific area.
 
+Kevin is writing a report on hip-dominant movements. He opens **Exercises**, where the library lists all 1,157 exercises alphabetically. He sets **Muscle group** to Glutes and **Equipment** to Dumbbell and applies the filters: 60 exercises remain, and each row shows its main target, its equipment, and its difficulty, with the other muscles it works underneath the name. He types "split squat" into **Name** to compare the split squat variations, then copies the address to send the same search to his lab partner.
+
+- The library is sorted by name, 20 per page with **Previous** and **Next**.
+- **Name** matches any part of an exercise name, ignoring case. **Muscle group**, **Equipment**, and **Difficulty** each pick one value from a fixed list or "Any".
+- A muscle group filter matches exercises that work that group as either the main target or a secondary one, since Kevin wants every exercise that trains an area.
+- Filters apply on **Apply** or Enter, not on every keystroke. **Clear** resets them all.
+- Filtering happens on the server with `?search=`, `?muscleGroup=`, `?equipment=`, `?difficulty=`, and `?page=`. The page puts the same parameters in its own address, so Back, refresh, and shared links keep the results.
+- When nothing matches, the page says so and suggests loosening the filters.
+
 #### 5. View an exercise's details
 
 > As Kevin, I want to open an exercise and see its target muscles, equipment, difficulty, and description so that I understand how the movement works.
 
+From his filtered list Kevin opens "Incline Dumbbell Bench Press". The page shows Chest as the main target, Triceps and Shoulders as secondary muscles, the equipment, an Intermediate difficulty, and that it is a compound movement. Below that, a description explains what the incline changes compared with a flat press, and numbered steps walk through the movement. **Back to exercise library** returns him to the same filtered page he came from.
+
+- The page shows the name, main target, other muscles worked, equipment, difficulty, type (compound or isolation), a description, and step-by-step instructions.
+- An address with an unknown or malformed exercise ID shows "Exercise not found" instead of an error.
+- **Save as custom template** starts a new template with the exercise's name and muscle groups already filled in, so a library exercise can be tweaked into a personal one.
+
 #### 6. Manage custom exercise templates
 
 > As Maya, I want to create, edit, and delete my own custom exercise templates with a name, target muscles, and default sets/reps so that I can save exercises that aren't in the library.
+
+Maya's gym has a sled, which isn't in the library. On **Templates** she clicks **New template**, names it "Sled push", ticks Quadriceps, Glutes, and Calves, sets 4 sets of 1 rep, and notes that one rep is one length of the turf. After a few weeks she does six lengths instead, so she clicks **Edit** on the card and changes the sets. A "Landmine rotation" template she no longer uses she deletes after confirming.
+
+- Name is required, up to 80 characters, and unique per user ignoring case. Saving a second "sled push" shows an error instead of creating a duplicate.
+- At least one target muscle group, chosen from the fixed list.
+- Default sets from 1 to 20 and default reps from 1 to 100, both whole numbers. Notes are optional, up to 500 characters.
+- Templates are listed alphabetically as cards showing the sets and reps, muscle groups, and notes.
+- **Edit** opens the same form with every field filled in. **Delete** asks for confirmation first.
+- Templates are stored under the logged-in user. Another user's template returns a 404, the same as one that doesn't exist. Logged-out visitors are asked to log in.
 
 ## Data model
 
@@ -142,6 +166,40 @@ Unique index on `{ username: 1 }`.
 
 Indexed on `{ userId: 1, performedOn: -1 }`, which serves the history list, the date range filter, and the breakdown query.
 
+### `exercises`
+
+The shared library, the same for every user. `npm run seed:exercises` in `backend/` fills it with 1,157 synthetic exercises: 83 base movements, each expanded into one exercise per piece of equipment it can use and per variation (incline, single-arm, paused, and so on). The generator is deterministic, so reseeding always produces the same library.
+
+| Field                   | Type     | Notes                                                       |
+| ----------------------- | -------- | ----------------------------------------------------------- |
+| `_id`                   | ObjectId |                                                             |
+| `name`                  | string   | Unique, ignoring case                                       |
+| `primaryMuscleGroup`    | string   | One of the fixed muscle groups                              |
+| `secondaryMuscleGroups` | array    | Other fixed muscle groups it works, possibly empty          |
+| `equipment`             | string   | Barbell, Dumbbell, EZ bar, Kettlebell, Cable, Machine, Smith machine, Resistance band, or Bodyweight |
+| `difficulty`            | string   | Beginner, Intermediate, or Advanced                         |
+| `mechanic`              | string   | Compound (several joints) or Isolation (one joint)          |
+| `description`           | string   | What the exercise trains and what this variation changes    |
+| `instructions`          | array    | Ordered steps, as strings                                   |
+
+Indexed on `{ name: 1 }` (unique, case-insensitive collation, which also serves the alphabetical sort), `{ primaryMuscleGroup: 1 }`, `{ secondaryMuscleGroups: 1 }`, and `{ equipment: 1 }`.
+
+### `customTemplates`
+
+| Field                    | Type     | Notes                                |
+| ------------------------ | -------- | ------------------------------------ |
+| `_id`                    | ObjectId |                                      |
+| `userId`                 | ObjectId | Owner                                |
+| `name`                   | string   | Up to 80 characters                  |
+| `targetMuscleGroups`     | array    | 1 or more of the fixed muscle groups |
+| `defaultSetCount`        | number   | 1 to 20                              |
+| `defaultRepetitionCount` | number   | 1 to 100                             |
+| `notes`                  | string   | Up to 500 characters, may be empty   |
+| `createdAt`              | Date     |                                      |
+| `updatedAt`              | Date     |                                      |
+
+Unique index on `{ userId: 1, name: 1 }` with a case-insensitive collation, which keeps names unique per user and serves the alphabetical list.
+
 ### `sessions`
 
 Login sessions for `express-session`, stored in MongoDB so they survive across Vercel's serverless instances.
@@ -173,6 +231,27 @@ All routes require a logged-in user and only touch that user's workouts.
 | `PUT`    | `/api/workouts/:id`       | Replace a workout with the edited version                            |
 | `DELETE` | `/api/workouts/:id`       | Delete a workout                                                     |
 | `GET`    | `/api/training-breakdown` | Exercises and sets per muscle group between `?from=` and `?to=`      |
+
+### Exercise library API
+
+Public, since the library is the same for everyone.
+
+| Method | Route                        | Purpose                                                                                     |
+| ------ | ---------------------------- | ------------------------------------------------------------------------------------------- |
+| `GET`  | `/api/exercises`             | List exercises by name; `?search=`, `?muscleGroup=`, `?equipment=`, `?difficulty=`, `?page=` |
+| `GET`  | `/api/exercises/:exerciseId` | Get one exercise with its description and instructions                                      |
+
+### Custom templates API
+
+All routes require a logged-in user and only touch that user's templates.
+
+| Method   | Route                               | Purpose                              |
+| -------- | ----------------------------------- | ------------------------------------ |
+| `GET`    | `/api/custom-templates`             | List the user's templates by name    |
+| `GET`    | `/api/custom-templates/:templateId` | Get one template for the edit form   |
+| `POST`   | `/api/custom-templates`             | Create a template                    |
+| `PUT`    | `/api/custom-templates/:templateId` | Replace a template with the edited version |
+| `DELETE` | `/api/custom-templates/:templateId` | Delete a template                    |
 
 ## Design mockups
 
@@ -209,3 +288,41 @@ The same form is used for editing, with every field filled in and the heading ch
 ### Training breakdown
 
 ![Training breakdown page](../assets/images/training-breakdown.png)
+
+### Exercise library
+
+![Exercise library page](../assets/images/exercise-library.png)
+
+### Filtering the library
+
+![Exercise library filtered by muscle group and equipment](../assets/images/exercise-library-filtered.png)
+
+### No matching exercises
+
+![Exercise library with no results](../assets/images/exercise-library-empty.png)
+
+### Exercise details
+
+![Exercise detail page](../assets/images/exercise-detail.png)
+
+### Custom templates
+
+![Custom templates page](../assets/images/custom-templates.png)
+
+### No templates yet
+
+![Empty custom templates page](../assets/images/custom-templates-empty.png)
+
+### Creating a template
+
+The same form is used for editing, with every field filled in and the heading changed to "Edit template".
+
+![New template form](../assets/images/custom-template-new.png)
+
+### Editing a template
+
+![Edit template form](../assets/images/custom-template-edit.png)
+
+### Deleting a template
+
+![Delete template confirmation](../assets/images/custom-template-delete.png)
