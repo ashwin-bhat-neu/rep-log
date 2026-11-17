@@ -5,6 +5,8 @@ const usageSteps = [
   "Log each session with its exercises, sets, reps, and the muscle group each exercise targets.",
   "Filter your history by date or exercise to see how your numbers change.",
   "Open the breakdown to see which muscle groups you trained most and least this week or month.",
+  "Browse the exercise library by name, muscle group, equipment, or difficulty, and open an exercise to see how to do it.",
+  "Save exercises that aren't in the library as custom templates with your usual sets and reps.",
 ];
 
 export default function HomePage() {
