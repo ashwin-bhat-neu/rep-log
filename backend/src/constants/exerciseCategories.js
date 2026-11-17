@@ -13,5 +13,3 @@ export const EQUIPMENT_TYPES = [
 ];
 
 export const DIFFICULTY_LEVELS = ["Beginner", "Intermediate", "Advanced"];
-
-export const MECHANICS = ["Compound", "Isolation"];
