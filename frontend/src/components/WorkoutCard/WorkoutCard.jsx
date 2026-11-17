@@ -10,8 +10,23 @@ function pluralize(count, singular) {
   return `${count} ${singular}${count === 1 ? "" : "s"}`;
 }
 
-export default function WorkoutCard({ workout, onDeleteRequest }) {
+// With an exercise filter, only the matching exercises are listed so their sets line up across cards.
+export default function WorkoutCard({
+  workout,
+  exerciseNameFragment = "",
+  onDeleteRequest,
+}) {
   const setCount = countSets(workout);
+  const normalizedFragment = exerciseNameFragment.toLowerCase();
+  const visibleExercises = normalizedFragment
+    ? workout.exercises.filter((exercise) =>
+        exercise.exerciseName.toLowerCase().includes(normalizedFragment),
+      )
+    : workout.exercises;
+  const summary =
+    visibleExercises.length < workout.exercises.length
+      ? `${visibleExercises.length} of ${pluralize(workout.exercises.length, "exercise")} shown`
+      : `${pluralize(workout.exercises.length, "exercise")} · ${pluralize(setCount, "set")}`;
   return (
     <li className="workout-card">
       <div className="workout-card-header">
@@ -24,10 +39,7 @@ export default function WorkoutCard({ workout, onDeleteRequest }) {
           )}
         </div>
         <div className="workout-card-actions">
-          <span className="workout-card-summary">
-            {pluralize(workout.exercises.length, "exercise")} ·{" "}
-            {pluralize(setCount, "set")}
-          </span>
+          <span className="workout-card-summary">{summary}</span>
           <Link className="button" to={`/workouts/${workout.id}/edit`}>
             Edit
           </Link>
@@ -41,7 +53,7 @@ export default function WorkoutCard({ workout, onDeleteRequest }) {
         </div>
       </div>
       <ul className="workout-card-exercises">
-        {workout.exercises.map((exercise, exerciseIndex) => (
+        {visibleExercises.map((exercise, exerciseIndex) => (
           <li
             key={`${exerciseIndex}-${exercise.exerciseName}`}
             className="workout-card-exercise"
@@ -80,5 +92,6 @@ WorkoutCard.propTypes = {
       }),
     ).isRequired,
   }).isRequired,
+  exerciseNameFragment: PropTypes.string,
   onDeleteRequest: PropTypes.func.isRequired,
 };

@@ -4,14 +4,36 @@ import { deleteWorkout, fetchWorkouts } from "../../api/workoutsApi.js";
 import ConfirmationDialog from "../../components/ConfirmationDialog/ConfirmationDialog.jsx";
 import PaginationControls from "../../components/PaginationControls/PaginationControls.jsx";
 import WorkoutCard from "../../components/WorkoutCard/WorkoutCard.jsx";
+import WorkoutHistoryFilters from "../../components/WorkoutHistoryFilters/WorkoutHistoryFilters.jsx";
 import useApiRequest from "../../hooks/useApiRequest.js";
 import { formatCalendarDate } from "../../utilities/calendarDates.js";
 import "../../styles/controls.css";
 import "./WorkoutHistoryPage.css";
 
+function pluralizeWorkouts(count) {
+  return `${count} workout${count === 1 ? "" : "s"}`;
+}
+
+function describeFilteredResults(totalWorkoutCount, appliedFilters) {
+  const hasDateRange = appliedFilters.from || appliedFilters.to;
+  const scope = appliedFilters.exercise
+    ? `with “${appliedFilters.exercise}”`
+    : "";
+  const range = hasDateRange ? "in this date range" : "";
+  return `${pluralizeWorkouts(totalWorkoutCount)} ${[scope, range].filter(Boolean).join(" ")}, newest first`;
+}
+
+// Filters and the page number live in the URL, so refresh and the back button keep them.
 export default function WorkoutHistoryPage() {
   const [searchParameters, setSearchParameters] = useSearchParams();
   const page = Number(searchParameters.get("page") ?? 1);
+  const appliedFilters = {
+    from: searchParameters.get("from") ?? "",
+    to: searchParameters.get("to") ?? "",
+    exercise: searchParameters.get("exercise") ?? "",
+  };
+  const { from, to, exercise } = appliedFilters;
+  const hasFilters = Boolean(from || to || exercise);
   // Bumped after a delete so the current page is fetched again with updated counts.
   const [reloadCount, setReloadCount] = useState(0);
   const [workoutPendingDelete, setWorkoutPendingDelete] = useState(null);
@@ -19,15 +41,29 @@ export default function WorkoutHistoryPage() {
   const [deleteErrorMessage, setDeleteErrorMessage] = useState("");
 
   const loadWorkouts = useCallback(
-    (signal) => fetchWorkouts({ page: String(page) }, signal),
+    (signal) =>
+      fetchWorkouts({ from, to, exercise, page: String(page) }, signal),
     // reloadCount isn't sent; listing it gives a new loader, so the hook fetches again after a delete.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [page, reloadCount],
+    [from, to, exercise, page, reloadCount],
   );
   const { data, error, isLoading } = useApiRequest(loadWorkouts);
 
+  function updateSearchParameters(filters, nextPage) {
+    const entries = Object.entries({ ...filters, page: String(nextPage) });
+    setSearchParameters(
+      entries.filter(
+        ([name, value]) => value && !(name === "page" && value === "1"),
+      ),
+    );
+  }
+
   function goToPage(nextPage) {
-    setSearchParameters(nextPage > 1 ? { page: String(nextPage) } : {});
+    updateSearchParameters(appliedFilters, nextPage);
+  }
+
+  function applyFilters(filters) {
+    updateSearchParameters(filters, 1);
   }
 
   async function confirmDelete() {
@@ -50,7 +86,10 @@ export default function WorkoutHistoryPage() {
     setWorkoutPendingDelete(null);
   }
 
-  const hasNoWorkouts = data && data.totalWorkoutCount === 0;
+  // While a new request runs, data still holds the previous result; empty states wait for the new one.
+  const hasNoResults = !isLoading && data?.totalWorkoutCount === 0;
+  const hasNoWorkouts = hasNoResults && !hasFilters;
+  const hasNoMatches = hasNoResults && hasFilters;
 
   return (
     <main className="workout-history-page">
@@ -60,6 +99,15 @@ export default function WorkoutHistoryPage() {
           Log workout
         </Link>
       </div>
+
+      {!hasNoWorkouts && (
+        <WorkoutHistoryFilters
+          key={`${from}|${to}|${exercise}`}
+          appliedFilters={appliedFilters}
+          onApply={applyFilters}
+          onClear={() => applyFilters({})}
+        />
+      )}
 
       {error && (
         <p className="error-message" role="alert">
@@ -89,8 +137,27 @@ export default function WorkoutHistoryPage() {
         </div>
       )}
 
-      {data && !hasNoWorkouts && (
+      {hasNoMatches && (
+        <div className="workout-history-page-empty">
+          <h2>No workouts match these filters</h2>
+          <p>Try a wider date range or a shorter part of the exercise name.</p>
+          <button
+            className="button"
+            type="button"
+            onClick={() => applyFilters({})}
+          >
+            Clear filters
+          </button>
+        </div>
+      )}
+
+      {data && data.totalWorkoutCount > 0 && (
         <>
+          {hasFilters && (
+            <p className="workout-history-page-message" aria-live="polite">
+              {describeFilteredResults(data.totalWorkoutCount, appliedFilters)}
+            </p>
+          )}
           <ul
             className="workout-history-page-list"
             aria-busy={isLoading ? "true" : "false"}
@@ -99,6 +166,7 @@ export default function WorkoutHistoryPage() {
               <WorkoutCard
                 key={workout.id}
                 workout={workout}
+                exerciseNameFragment={exercise}
                 onDeleteRequest={setWorkoutPendingDelete}
               />
             ))}
