@@ -86,3 +86,5 @@ export default function RegisterPage() {
     </AuthenticationCard>
   );
 }
+
+RegisterPage.propTypes = {};
