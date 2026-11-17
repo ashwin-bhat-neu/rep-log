@@ -17,3 +17,9 @@ export function formatCalendarDate(calendarDate) {
     year: "numeric",
   });
 }
+
+export function addDaysToCalendarDate(calendarDate, dayCount) {
+  const [year, month, day] = calendarDate.split("-").map(Number);
+  const shiftedDate = new Date(year, month - 1, day + dayCount);
+  return `${shiftedDate.getFullYear()}-${padToTwoDigits(shiftedDate.getMonth() + 1)}-${padToTwoDigits(shiftedDate.getDate())}`;
+}

@@ -1,0 +1,24 @@
+.training-callout {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 20px 24px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+}
+
+.training-callout-attention {
+  border-left: 4px solid var(--color-accent);
+}
+
+.training-callout-label,
+.training-callout-detail {
+  color: var(--color-ink-muted);
+  font-size: 14px;
+}
+
+.training-callout-muscle-groups {
+  font-size: 22px;
+  font-weight: 700;
+}

@@ -26,9 +26,14 @@ export default function NavigationBar() {
       {!isCheckingSession && (
         <nav className="navigation-bar-links" aria-label="Main">
           {authenticatedUser && (
-            <NavLink to="/workouts" className={navigationLinkClassName}>
-              Workouts
-            </NavLink>
+            <>
+              <NavLink to="/workouts" className={navigationLinkClassName}>
+                Workouts
+              </NavLink>
+              <NavLink to="/breakdown" className={navigationLinkClassName}>
+                Breakdown
+              </NavLink>
+            </>
           )}
           <NavLink to="/exercises" className={navigationLinkClassName}>
             Exercises
