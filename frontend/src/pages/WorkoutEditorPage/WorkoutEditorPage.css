@@ -1,0 +1,17 @@
+.workout-editor-page {
+  max-width: 1184px;
+  margin: 0 auto;
+  padding: 40px 48px;
+  display: grid;
+  gap: 24px;
+}
+
+.workout-editor-page-message {
+  color: var(--color-ink-muted);
+}
+
+@media (max-width: 640px) {
+  .workout-editor-page {
+    padding: 24px 16px;
+  }
+}

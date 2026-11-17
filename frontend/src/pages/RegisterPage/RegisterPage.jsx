@@ -19,7 +19,7 @@ export default function RegisterPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (authenticatedUser && !isSubmitting) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/workouts" replace />;
   }
 
   async function handleSubmit() {
@@ -31,7 +31,7 @@ export default function RegisterPage() {
     setErrorMessage("");
     try {
       await register({ username, password });
-      navigate("/", { replace: true });
+      navigate("/workouts", { replace: true });
     } catch (error) {
       setErrorMessage(error.message);
       setIsSubmitting(false);

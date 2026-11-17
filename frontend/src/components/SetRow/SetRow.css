@@ -1,0 +1,28 @@
+.set-row {
+  display: grid;
+  grid-template-columns: 40px 140px 140px auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.set-row .field-input {
+  height: 38px;
+}
+
+.set-row-number {
+  font-weight: 600;
+  text-align: center;
+}
+
+.set-row-remove {
+  justify-self: start;
+  padding: 6px 14px;
+  font-size: 14px;
+}
+
+@media (max-width: 640px) {
+  .set-row {
+    grid-template-columns: 28px 1fr 1fr auto;
+    gap: 8px;
+  }
+}

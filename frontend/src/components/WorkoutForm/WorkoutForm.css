@@ -1,0 +1,41 @@
+.workout-form {
+  max-width: 900px;
+  display: grid;
+  gap: 20px;
+  padding: 28px 32px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+}
+
+.workout-form-fields {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 20px;
+}
+
+.workout-form-notes {
+  min-height: 84px;
+  resize: vertical;
+}
+
+.workout-form-add-exercise {
+  justify-self: start;
+}
+
+.workout-form-actions {
+  display: flex;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border);
+}
+
+@media (max-width: 640px) {
+  .workout-form {
+    padding: 20px 16px;
+  }
+
+  .workout-form-fields {
+    grid-template-columns: 1fr;
+  }
+}

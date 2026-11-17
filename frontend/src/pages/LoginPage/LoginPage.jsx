@@ -13,7 +13,7 @@ export default function LoginPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   // Pages that require login send the visitor here and expect to be returned afterwards.
-  const destinationAfterLogin = location.state?.from ?? "/";
+  const destinationAfterLogin = location.state?.from ?? "/workouts";
 
   if (authenticatedUser && !isSubmitting) {
     return <Navigate to={destinationAfterLogin} replace />;
