@@ -65,3 +65,5 @@ export default function LoginPage() {
     </AuthenticationCard>
   );
 }
+
+LoginPage.propTypes = {};

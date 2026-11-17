@@ -27,3 +27,5 @@ export default function HomePage() {
     </main>
   );
 }
+
+HomePage.propTypes = {};
