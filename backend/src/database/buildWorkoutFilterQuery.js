@@ -1,6 +1,4 @@
-function escapeRegularExpression(text) {
-  return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
+import { escapeRegularExpression } from "../utilities/escapeRegularExpression.js";
 
 // Dates are YYYY-MM-DD strings, so string comparison orders them correctly.
 export function buildWorkoutFilterQuery(
