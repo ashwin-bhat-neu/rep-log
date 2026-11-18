@@ -170,17 +170,17 @@ Indexed on `{ userId: 1, performedOn: -1 }`, which serves the history list, the 
 
 The shared library, the same for every user. `npm run seed:exercises` in `backend/` fills it with 1,157 synthetic exercises: 83 base movements, each expanded into one exercise per piece of equipment it can use and per variation (incline, single-arm, paused, and so on). The generator is deterministic, so reseeding always produces the same library.
 
-| Field                   | Type     | Notes                                                       |
-| ----------------------- | -------- | ----------------------------------------------------------- |
-| `_id`                   | ObjectId |                                                             |
-| `name`                  | string   | Unique, ignoring case                                       |
-| `primaryMuscleGroup`    | string   | One of the fixed muscle groups                              |
-| `secondaryMuscleGroups` | array    | Other fixed muscle groups it works, possibly empty          |
+| Field                   | Type     | Notes                                                                                                |
+| ----------------------- | -------- | ---------------------------------------------------------------------------------------------------- |
+| `_id`                   | ObjectId |                                                                                                      |
+| `name`                  | string   | Unique, ignoring case                                                                                |
+| `primaryMuscleGroup`    | string   | One of the fixed muscle groups                                                                       |
+| `secondaryMuscleGroups` | array    | Other fixed muscle groups it works, possibly empty                                                   |
 | `equipment`             | string   | Barbell, Dumbbell, EZ bar, Kettlebell, Cable, Machine, Smith machine, Resistance band, or Bodyweight |
-| `difficulty`            | string   | Beginner, Intermediate, or Advanced                         |
-| `mechanic`              | string   | Compound (several joints) or Isolation (one joint)          |
-| `description`           | string   | What the exercise trains and what this variation changes    |
-| `instructions`          | array    | Ordered steps, as strings                                   |
+| `difficulty`            | string   | Beginner, Intermediate, or Advanced                                                                  |
+| `mechanic`              | string   | Compound (several joints) or Isolation (one joint)                                                   |
+| `description`           | string   | What the exercise trains and what this variation changes                                             |
+| `instructions`          | array    | Ordered steps, as strings                                                                            |
 
 Indexed on `{ name: 1 }` (unique, case-insensitive collation, which also serves the alphabetical sort), `{ primaryMuscleGroup: 1 }`, `{ secondaryMuscleGroups: 1 }`, and `{ equipment: 1 }`.
 
@@ -236,22 +236,22 @@ All routes require a logged-in user and only touch that user's workouts.
 
 Public, since the library is the same for everyone.
 
-| Method | Route                        | Purpose                                                                                     |
-| ------ | ---------------------------- | ------------------------------------------------------------------------------------------- |
+| Method | Route                        | Purpose                                                                                      |
+| ------ | ---------------------------- | -------------------------------------------------------------------------------------------- |
 | `GET`  | `/api/exercises`             | List exercises by name; `?search=`, `?muscleGroup=`, `?equipment=`, `?difficulty=`, `?page=` |
-| `GET`  | `/api/exercises/:exerciseId` | Get one exercise with its description and instructions                                      |
+| `GET`  | `/api/exercises/:exerciseId` | Get one exercise with its description and instructions                                       |
 
 ### Custom templates API
 
 All routes require a logged-in user and only touch that user's templates.
 
-| Method   | Route                               | Purpose                              |
-| -------- | ----------------------------------- | ------------------------------------ |
-| `GET`    | `/api/custom-templates`             | List the user's templates by name    |
-| `GET`    | `/api/custom-templates/:templateId` | Get one template for the edit form   |
-| `POST`   | `/api/custom-templates`             | Create a template                    |
+| Method   | Route                               | Purpose                                    |
+| -------- | ----------------------------------- | ------------------------------------------ |
+| `GET`    | `/api/custom-templates`             | List the user's templates by name          |
+| `GET`    | `/api/custom-templates/:templateId` | Get one template for the edit form         |
+| `POST`   | `/api/custom-templates`             | Create a template                          |
 | `PUT`    | `/api/custom-templates/:templateId` | Replace a template with the edited version |
-| `DELETE` | `/api/custom-templates/:templateId` | Delete a template                    |
+| `DELETE` | `/api/custom-templates/:templateId` | Delete a template                          |
 
 ## Design mockups
 
