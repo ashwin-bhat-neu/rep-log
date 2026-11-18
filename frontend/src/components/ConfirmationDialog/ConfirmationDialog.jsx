@@ -31,6 +31,7 @@ export default function ConfirmationDialog({
   }
 
   return (
+    {/* deleting a workout asks you to confirm first. great practice*/}
     <dialog
       ref={dialogRef}
       className="confirmation-dialog"

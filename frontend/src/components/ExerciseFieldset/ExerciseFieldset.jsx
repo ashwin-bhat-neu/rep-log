@@ -61,6 +61,7 @@ export default function ExerciseFieldset({
           <label className="field-label" htmlFor={nameInputId}>
             Exercise name
           </label>
+          {/* review: logging workouts but connecting the form to the library or templates would keep exercise names consistent*/}
           <input
             id={nameInputId}
             className="field-input"
@@ -100,6 +101,7 @@ export default function ExerciseFieldset({
       <div className="exercise-fieldset-set-header" aria-hidden="true">
         <span>Set</span>
         <span>Reps</span>
+        {/* weight can only be entered in kg. maybe option for pounds?*/}
         <span>Weight (kg)</span>
       </div>
       <div className="exercise-fieldset-sets">

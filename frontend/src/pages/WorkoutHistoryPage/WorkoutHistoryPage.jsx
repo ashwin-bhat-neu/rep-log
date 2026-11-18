@@ -22,6 +22,7 @@ function describeFilteredResults(totalWorkoutCount, appliedFilters) {
   const range = hasDateRange ? "in this date range" : "";
   return `${pluralizeWorkouts(totalWorkoutCount)} ${[scope, range].filter(Boolean).join(" ")}, newest first`;
 }
+// review: as a user refreshing the page or pressing back keeps your filters and page numbers. great for users to add a bookmark!
 
 // Filters and the page number live in the URL, so refresh and the back button keep them.
 export default function WorkoutHistoryPage() {
