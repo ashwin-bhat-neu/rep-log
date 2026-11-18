@@ -146,6 +146,8 @@ assets/screenshots/      Screenshots of the deployed app
 ## Links
 
 - [**Presentation Video**](https://youtu.be/agnKJ68IlaA)
+- [**Presentation Slides**](https://docs.google.com/presentation/d/1VALoSSIUHQrJxDtpWN180pDnn7iO70FJzWjoUeeDf2I/edit?usp=sharing)
+- [**Slides Walkthrough Video**](https://youtu.be/H8al0P3uhX8)
 
 ## License
 
