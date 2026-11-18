@@ -10,6 +10,9 @@ import HomePage from "./pages/HomePage/HomePage.jsx";
 import LoginPage from "./pages/LoginPage/LoginPage.jsx";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage.jsx";
 import RegisterPage from "./pages/RegisterPage/RegisterPage.jsx";
+import TrainingBreakdownPage from "./pages/TrainingBreakdownPage/TrainingBreakdownPage.jsx";
+import WorkoutEditorPage from "./pages/WorkoutEditorPage/WorkoutEditorPage.jsx";
+import WorkoutHistoryPage from "./pages/WorkoutHistoryPage/WorkoutHistoryPage.jsx";
 
 export default function App() {
   return (
@@ -19,6 +22,38 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route
+          path="/workouts"
+          element={
+            <RequireAuthentication>
+              <WorkoutHistoryPage />
+            </RequireAuthentication>
+          }
+        />
+        <Route
+          path="/workouts/new"
+          element={
+            <RequireAuthentication>
+              <WorkoutEditorPage key="new" />
+            </RequireAuthentication>
+          }
+        />
+        <Route
+          path="/workouts/:workoutId/edit"
+          element={
+            <RequireAuthentication>
+              <WorkoutEditorPage key="edit" />
+            </RequireAuthentication>
+          }
+        />
+        <Route
+          path="/breakdown"
+          element={
+            <RequireAuthentication>
+              <TrainingBreakdownPage />
+            </RequireAuthentication>
+          }
+        />
         <Route path="/exercises" element={<ExerciseLibraryPage />} />
         <Route path="/exercises/:exerciseId" element={<ExerciseDetailPage />} />
         <Route

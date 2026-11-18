@@ -10,7 +10,8 @@
     "seed:exercises": "node --env-file-if-exists=.env scripts/seedExerciseLibrary.js",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "seed:workouts": "node --env-file-if-exists=.env scripts/seedWorkouts.js"
   },
   "repository": {
     "type": "git",

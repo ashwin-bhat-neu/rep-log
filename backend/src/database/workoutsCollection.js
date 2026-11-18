@@ -82,3 +82,14 @@ export async function deleteWorkout(userId, workoutId) {
   const { deletedCount } = await workouts.deleteOne({ _id: workoutId, userId });
   return deletedCount === 1;
 }
+
+// Only the exercises are needed to total sets per muscle group.
+export async function listWorkoutsInRange(userId, { fromDate, toDate }) {
+  const workouts = await getWorkoutsCollection();
+  return workouts
+    .find(
+      { userId, performedOn: { $gte: fromDate, $lte: toDate } },
+      { projection: { _id: 0, exercises: 1 } },
+    )
+    .toArray();
+}

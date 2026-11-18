@@ -1,0 +1,28 @@
+.period-toggle {
+  display: flex;
+  border: 1px solid var(--color-control-border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--color-surface);
+}
+
+.period-toggle-option {
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  border: none;
+  background: transparent;
+  padding: 9px 22px;
+  color: var(--color-ink);
+  cursor: pointer;
+}
+
+.period-toggle-option[aria-pressed="true"] {
+  background: var(--color-navigation);
+  color: #ffffff;
+}
+
+.period-toggle-option:focus-visible {
+  outline: 3px solid rgb(47 111 222 / 35%);
+  outline-offset: -3px;
+}

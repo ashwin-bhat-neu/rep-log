@@ -1,0 +1,76 @@
+.exercise-fieldset {
+  position: relative;
+  margin: 0;
+  padding: 20px 24px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-field-surface);
+  display: grid;
+  gap: 14px;
+}
+
+.exercise-fieldset-legend {
+  float: left;
+  padding: 0;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.exercise-fieldset-remove {
+  position: absolute;
+  top: 16px;
+  right: 24px;
+  padding: 6px 14px;
+  font-size: 14px;
+}
+
+.exercise-fieldset-fields {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 16px;
+}
+
+.exercise-fieldset-set-header {
+  display: grid;
+  grid-template-columns: 40px 140px 140px;
+  gap: 12px;
+  margin-bottom: -6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-ink-muted);
+}
+
+.exercise-fieldset-set-header span:first-child {
+  text-align: center;
+}
+
+.exercise-fieldset-sets {
+  display: grid;
+  gap: 10px;
+}
+
+.exercise-fieldset-add-set {
+  justify-self: start;
+  padding: 6px 14px;
+  font-size: 14px;
+}
+
+@media (max-width: 640px) {
+  .exercise-fieldset {
+    padding: 16px;
+  }
+
+  .exercise-fieldset-remove {
+    position: static;
+    justify-self: start;
+  }
+
+  .exercise-fieldset-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .exercise-fieldset-set-header {
+    grid-template-columns: 28px 1fr 1fr 74px;
+    gap: 8px;
+  }
+}

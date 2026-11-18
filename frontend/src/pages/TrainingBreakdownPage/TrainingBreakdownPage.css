@@ -1,0 +1,77 @@
+.training-breakdown-page {
+  max-width: 1184px;
+  margin: 0 auto;
+  padding: 40px 48px;
+  display: grid;
+  gap: 24px;
+}
+
+.training-breakdown-page-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.training-breakdown-page-message {
+  margin-top: 4px;
+  color: var(--color-ink-muted);
+}
+
+.training-breakdown-page-tiles,
+.training-breakdown-page-callouts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 0 0 16px;
+}
+
+.training-breakdown-page-panels {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.training-breakdown-page-panel {
+  padding: 20px 24px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+}
+
+.training-breakdown-page-empty {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  padding: 64px 24px;
+  text-align: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+}
+
+.training-breakdown-page-empty p {
+  color: var(--color-ink-muted);
+}
+
+[aria-busy="true"] .training-breakdown-page-panels {
+  opacity: 0.6;
+}
+
+@media (max-width: 860px) {
+  .training-breakdown-page {
+    padding: 24px 16px;
+  }
+
+  .training-breakdown-page-heading {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .training-breakdown-page-tiles,
+  .training-breakdown-page-callouts,
+  .training-breakdown-page-panels {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,25 @@
+.workout-history-filters {
+  display: grid;
+  grid-template-columns: 200px 200px 1fr auto;
+  gap: 16px;
+  align-items: end;
+  padding: 20px 24px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+}
+
+.workout-history-filters-actions {
+  display: flex;
+  gap: 8px;
+}
+
+@media (max-width: 860px) {
+  .workout-history-filters {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .workout-history-filters-actions {
+    grid-column: 1 / -1;
+  }
+}
