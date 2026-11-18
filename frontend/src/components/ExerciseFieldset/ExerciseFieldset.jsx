@@ -101,6 +101,7 @@ export default function ExerciseFieldset({
       <div className="exercise-fieldset-set-header" aria-hidden="true">
         <span>Set</span>
         <span>Reps</span>
+        {/* weight can only be entered in kg. maybe option for pounds?*/}
         <span>Weight (kg)</span>
       </div>
       <div className="exercise-fieldset-sets">
