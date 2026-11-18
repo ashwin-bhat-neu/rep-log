@@ -61,6 +61,7 @@ export default function ExerciseFieldset({
           <label className="field-label" htmlFor={nameInputId}>
             Exercise name
           </label>
+          {/* review: logging workouts but connecting the form to the library or templates would keep exercise names consistent*/}
           <input
             id={nameInputId}
             className="field-input"
